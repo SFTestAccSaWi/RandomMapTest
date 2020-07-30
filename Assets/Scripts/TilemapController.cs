@@ -12,7 +12,7 @@ namespace Assets
 {
     public class TilemapController : Singleton<TilemapController>
     {
-        public int Buffer { get => 500; }
+        public int Buffer { get => 300; }
         public Tilemap tilemap;
         public NoiseWrapper noiseWrapper;
         public TileBase GreenTile1;
