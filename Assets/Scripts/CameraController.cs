@@ -15,11 +15,13 @@ public class CameraController : MonoBehaviour
     float mouseScrollValueDelta = 0;
     Vector3 cameraOffset = new Vector3(0,0,0);
     private float speed = 100f;
+    private float origCamSize;
 
     // Start is called before the frame update
     void Start()
     {
         tmapController = TilemapController.Instance;
+        origCamSize = Camera.main.orthographicSize;
     }
 
     // Update is called once per frame
@@ -34,6 +36,7 @@ public class CameraController : MonoBehaviour
             }
             mouswheelTimer = mouswheelTimerLength;
             mouseScrollValueDelta += mouseScrollCurrentDelta;
+            Camera.main.orthographicSize -= mouseScrollCurrentDelta * 10;
         }
 
         Vector3 cameraCurrentOffset = GetCurrentOffset();
@@ -94,6 +97,7 @@ public class CameraController : MonoBehaviour
             tmapController.noiseWrapper.IncreaseFrequencyt(f);
             mouseScrollValueDelta = 0;
             tmapController.UpdateTiles();
+            Camera.main.orthographicSize = origCamSize;
         }
     }
 
