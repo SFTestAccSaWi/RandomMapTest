@@ -23,9 +23,10 @@ namespace Assets
         }
 
         public void SetSeed(int seed) => noise.SetSeed(seed);
-        public void IncreaseFrequencyt(float ammount)
+
+        public void MultiplyFrequencyt(float ammount)
         {
-            currentFrequency += ammount;
+            currentFrequency *= ammount;
             noise.SetFrequency(currentFrequency);
         }
 

@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseScrollCurrentDelta = Input.GetAxis("Mouse ScrollWheel");
+        float mouseScrollCurrentDelta = Input.GetAxis("Mouse ScrollWheel")*5;
         if (mouseScrollCurrentDelta != 0)
         {
             if (mouswheelTimer<=0)
@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
             }
             mouswheelTimer = mouswheelTimerLength;
             mouseScrollValueDelta += mouseScrollCurrentDelta;
-            Camera.main.orthographicSize -= mouseScrollCurrentDelta*25;
+            Camera.main.orthographicSize *= mouseScrollCurrentDelta<0? (1/mouseScrollCurrentDelta) : mouseScrollCurrentDelta;
         }
 
         Vector3 cameraCurrentOffset = GetCurrentOffset();
@@ -93,8 +93,8 @@ public class CameraController : MonoBehaviour
 
         if (mouseScrollValueDelta != 0f)
         {
-            float f = (-mouseScrollValueDelta/110);
-            tmapController.noiseWrapper.IncreaseFrequencyt(f);
+            float f = mouseScrollValueDelta < 0 ? 1 / mouseScrollValueDelta : mouseScrollValueDelta;
+            tmapController.noiseWrapper.MultiplyFrequencyt(f);
             mouseScrollValueDelta = 0;
             Camera.main.orthographicSize = origCamSize;
             tmapController.UpdateTiles();

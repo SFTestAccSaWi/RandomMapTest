@@ -36,7 +36,7 @@ namespace Assets
             allTiles = new TileBase[]
             {
                 BrownTile1, BrownTile2, BrownTile3,
-                GreenTile1, GreenTile2, GreenTile3,
+                GreenTile2, GreenTile1, GreenTile3,
                 GrayTile1, GrayTile2, GrayTile3
             };
             UpdateTiles();
@@ -194,12 +194,12 @@ namespace Assets
         {
             value = (value + 1) / 2; //make val between 0 and 1
             int index =
-                value < 0.125f ? 0 :
-                value < 0.25f ? 1 :
-                value < 0.375f ? 2 :
+                value < 0.1f ? 0 :
+                value < 0.15f ? 1 :
+                value < 0.25f ? 2 :
                 value < 0.5 ? 3 :
-                value < 0.625 ? 4 :
-                value < 0.75 ? 5 :
+                value < 0.725 ? 4 :
+                value < 0.85 ? 5 :
                 value < 0.875 ? 6 :
                 value < 0.95 ? 7 :
                 8;
