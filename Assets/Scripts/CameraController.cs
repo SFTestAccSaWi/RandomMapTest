@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
             }
             mouswheelTimer = mouswheelTimerLength;
             mouseScrollValueDelta += mouseScrollCurrentDelta;
-            Camera.main.orthographicSize -= mouseScrollCurrentDelta * 10;
+            Camera.main.orthographicSize -= mouseScrollCurrentDelta*25;
         }
 
         Vector3 cameraCurrentOffset = GetCurrentOffset();
@@ -96,8 +96,8 @@ public class CameraController : MonoBehaviour
             float f = (-mouseScrollValueDelta/110);
             tmapController.noiseWrapper.IncreaseFrequencyt(f);
             mouseScrollValueDelta = 0;
-            tmapController.UpdateTiles();
             Camera.main.orthographicSize = origCamSize;
+            tmapController.UpdateTiles();
         }
     }
 

@@ -194,14 +194,14 @@ namespace Assets
         {
             value = (value + 1) / 2; //make val between 0 and 1
             int index =
-                value < 0.19f ? 0 :
-                value < 0.28f ? 1 :
-                value < 0.39f ? 2 :
-                value < 0.50f ? 3 :
-                value < 0.59 ? 4 :
-                value < 0.68 ? 5 :
-                value < 0.78 ? 6 :
-                value < 0.83 ? 7 :
+                value < 0.125f ? 0 :
+                value < 0.25f ? 1 :
+                value < 0.375f ? 2 :
+                value < 0.5 ? 3 :
+                value < 0.625 ? 4 :
+                value < 0.75 ? 5 :
+                value < 0.875 ? 6 :
+                value < 0.95 ? 7 :
                 8;
 
             return allTiles[index];
