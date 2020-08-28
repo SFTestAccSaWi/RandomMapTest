@@ -32,7 +32,7 @@ namespace Assets
         void Start()
         {
             lastBufferedScope = GetScopeWorldBounds();
-            noiseWrapper = new NoiseWrapper(1337);
+            noiseWrapper = new NoiseWrapper(1337, 1338);
             allTiles = new TileBase[]
             {
                 BrownTile1, BrownTile2, BrownTile3,
@@ -46,7 +46,7 @@ namespace Assets
         {
             foreach (Vector3 currVector in points)
             {
-                float noiseVal = noiseWrapper.GetNoise(currVector.x, currVector.y);
+                float noiseVal = noiseWrapper.GetNormalizedNoise(currVector.x, currVector.y);
                 tilemap.SetTile(tilemap.layoutGrid.WorldToCell(currVector), GetTileForNoiseValue(noiseVal));
             }
         }
@@ -192,7 +192,6 @@ namespace Assets
 
         private TileBase GetTileForNoiseValue(float value)
         {
-            value = (value + 1) / 2; //make val between 0 and 1
             int index =
                 value < 0.1f ? 0 :
                 value < 0.15f ? 1 :

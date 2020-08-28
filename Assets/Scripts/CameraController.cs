@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
     float cameraOffsetTimerLength = 0.05f;
     float cameraOffsetTimer = 0;
     float mouseScrollValueDelta = 0;
+    float scrollDeltaMultiplier = 5;
     Vector3 cameraOffset = new Vector3(0,0,0);
     private float speed = 100f;
     private float origCamSize;
@@ -27,7 +28,8 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseScrollCurrentDelta = Input.GetAxis("Mouse ScrollWheel")*5;
+        //zoom cam
+        float mouseScrollCurrentDelta = Input.GetAxis("Mouse ScrollWheel")*scrollDeltaMultiplier;
         if (mouseScrollCurrentDelta != 0)
         {
             if (mouswheelTimer<=0)
@@ -35,10 +37,12 @@ public class CameraController : MonoBehaviour
                 StartCoroutine(HandleMouseWheelTimer());
             }
             mouswheelTimer = mouswheelTimerLength;
+
             mouseScrollValueDelta += mouseScrollCurrentDelta;
-            Camera.main.orthographicSize *= mouseScrollCurrentDelta<0? (1/mouseScrollCurrentDelta) : mouseScrollCurrentDelta;
+            Camera.main.orthographicSize *= mouseScrollCurrentDelta < 0? (1/Math.Abs(mouseScrollCurrentDelta)) : mouseScrollCurrentDelta;
         }
 
+        //move cam
         Vector3 cameraCurrentOffset = GetCurrentOffset();
         if (cameraCurrentOffset.x!=0 || cameraCurrentOffset.y != 0)
         {
@@ -93,7 +97,7 @@ public class CameraController : MonoBehaviour
 
         if (mouseScrollValueDelta != 0f)
         {
-            float f = mouseScrollValueDelta < 0 ? 1 / mouseScrollValueDelta : mouseScrollValueDelta;
+            float f = mouseScrollValueDelta < 0 ? 1 / Math.Abs(mouseScrollValueDelta) : mouseScrollValueDelta;
             tmapController.noiseWrapper.MultiplyFrequencyt(f);
             mouseScrollValueDelta = 0;
             Camera.main.orthographicSize = origCamSize;

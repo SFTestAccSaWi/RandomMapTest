@@ -11,26 +11,38 @@ namespace Assets
 {
     public class NoiseWrapper : Singleton<NoiseWrapper>
     {
-        public FastNoise noise;
-        private static float currentFrequency;
+        private FastNoise GranularNoise;
+        private FastNoise RoughNoise;
+        private static float currentGranularFrequency;
+        private static float currentRoughFrequency;
 
-        public NoiseWrapper(int seed)
+        public NoiseWrapper(int seedGranular, int seedRough)
         {
-            noise = new FastNoise(seed);
-            noise.SetNoiseType(FastNoise.NoiseType.Simplex);
-            currentFrequency = 0.021f;
-            noise.SetFrequency(currentFrequency);
-        }
+            GranularNoise = new FastNoise(seedGranular);
+            GranularNoise.SetNoiseType(FastNoise.NoiseType.Simplex);
+            currentGranularFrequency = 0.021f;
+            GranularNoise.SetFrequency(currentGranularFrequency);
 
-        public void SetSeed(int seed) => noise.SetSeed(seed);
+            RoughNoise = new FastNoise(seedRough);
+            RoughNoise.SetNoiseType(FastNoise.NoiseType.Simplex);
+            currentRoughFrequency = 0.081f;
+            RoughNoise.SetFrequency(currentRoughFrequency);
+        }
 
         public void MultiplyFrequencyt(float ammount)
         {
-            currentFrequency *= ammount;
-            noise.SetFrequency(currentFrequency);
+            currentGranularFrequency *= ammount;
+            GranularNoise.SetFrequency(currentGranularFrequency);
+
+            currentRoughFrequency *= ammount;
+            RoughNoise.SetFrequency(currentRoughFrequency);
         }
 
-        public float GetNoise(float x, float y) => noise.GetNoise(x, y);
-        public float GetNoise(int x, int y) => noise.GetNoise(x, y);
+        public float GetNormalizedNoise(float x, float y)
+        {
+           return (GranularNoise.GetNoise(x, y) + 1)/2;
+        }
+
+
     }
 }
