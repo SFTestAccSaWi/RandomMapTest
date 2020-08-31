@@ -30,6 +30,7 @@ public class CameraController : MonoBehaviour
     {
         //zoom cam
         float mouseScrollCurrentDelta = Input.GetAxis("Mouse ScrollWheel")*scrollDeltaMultiplier;
+        mouseScrollValueDelta += mouseScrollCurrentDelta;
         if (mouseScrollCurrentDelta != 0)
         {
             if (mouswheelTimer<=0)
@@ -37,8 +38,6 @@ public class CameraController : MonoBehaviour
                 StartCoroutine(HandleMouseWheelTimer());
             }
             mouswheelTimer = mouswheelTimerLength;
-
-            mouseScrollValueDelta += mouseScrollCurrentDelta;
             Camera.main.orthographicSize *= mouseScrollCurrentDelta < 0? (1/Math.Abs(mouseScrollCurrentDelta)) : mouseScrollCurrentDelta;
         }
 
@@ -59,29 +58,30 @@ public class CameraController : MonoBehaviour
 
     private Vector3 GetCurrentOffset()
     {
+        float speedTimeDeltaTime = speed * Time.deltaTime;
         if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.RightArrow))
-            return new Vector3(speed * Time.deltaTime, speed * Time.deltaTime, 0);
+            return new Vector3(speedTimeDeltaTime, speedTimeDeltaTime, 0);
         else
         if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.RightArrow))
-            return new Vector3(speed * Time.deltaTime, -(speed * Time.deltaTime), 0);
+            return new Vector3(speedTimeDeltaTime, -(speedTimeDeltaTime), 0);
         else
         if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftArrow))
-            return new Vector3(-(speed * Time.deltaTime), speed * Time.deltaTime, 0);
+            return new Vector3(-(speedTimeDeltaTime), speedTimeDeltaTime, 0);
         else
         if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftArrow))
-            return new Vector3(-(speed * Time.deltaTime), -(speed * Time.deltaTime), 0);
+            return new Vector3(-(speedTimeDeltaTime), -(speedTimeDeltaTime), 0);
         else
             if (Input.GetKey(KeyCode.RightArrow))
-            return new Vector3(speed * Time.deltaTime, 0, 0);
+            return new Vector3(speedTimeDeltaTime, 0, 0);
         else
         if (Input.GetKey(KeyCode.LeftArrow))
-            return new Vector3(-(speed * Time.deltaTime), 0, 0);
+            return new Vector3(-(speedTimeDeltaTime), 0, 0);
         else
         if (Input.GetKey(KeyCode.DownArrow))
-            return new Vector3(0, -(speed * Time.deltaTime), 0);
+            return new Vector3(0, -(speedTimeDeltaTime), 0);
         else
         if (Input.GetKey(KeyCode.UpArrow))
-            return new Vector3(0, speed * Time.deltaTime, 0);
+            return new Vector3(0, speedTimeDeltaTime, 0);
         else
         return new Vector3(0, 0, 0);
     }
@@ -98,7 +98,7 @@ public class CameraController : MonoBehaviour
         if (mouseScrollValueDelta != 0f)
         {
             float f = mouseScrollValueDelta < 0 ? 1 / Math.Abs(mouseScrollValueDelta) : mouseScrollValueDelta;
-            tmapController.noiseWrapper.MultiplyFrequencyt(f);
+            tmapController.noiseController.MultiplyFrequencyt(f);
             mouseScrollValueDelta = 0;
             Camera.main.orthographicSize = origCamSize;
             tmapController.UpdateTiles();

@@ -14,7 +14,7 @@ namespace Assets
     {
         public int Buffer { get => 300; }
         public Tilemap tilemap;
-        public NoiseWrapper noiseWrapper;
+        public NoiseController noiseController;
         public TileBase GreenTile1;
         public TileBase GreenTile2;
         public TileBase GreenTile3;
@@ -27,18 +27,23 @@ namespace Assets
         TileBase[] allTiles;
         Bounds lastBufferedScope;
         Bounds currentBufferedScope;
+        static Color currentTileColor = new Color();
 
         // Start is called before the first frame update
         void Start()
         {
             lastBufferedScope = GetScopeWorldBounds();
-            noiseWrapper = new NoiseWrapper(1337, 1338);
+            int[] seeds = new int[] { 1337, 1338, 1339 };
+            noiseController = new NoiseController(seeds);
             allTiles = new TileBase[]
             {
                 BrownTile1, BrownTile2, BrownTile3,
                 GreenTile2, GreenTile1, GreenTile3,
                 GrayTile1, GrayTile2, GrayTile3
             };
+
+            foreach (Tile tile in allTiles)
+                tile.flags = TileFlags.LockAll;
 
             UpdateTiles();
         }
@@ -47,7 +52,7 @@ namespace Assets
         {
             foreach (Vector3 currVector in points)
             {
-                float noiseVal = noiseWrapper.GetNormalizedNoise(currVector.x, currVector.y);
+                float noiseVal = noiseController.GetNormalizedNoise(currVector.x, currVector.y);
                 tilemap.SetTile(tilemap.layoutGrid.WorldToCell(currVector), GetTileForNoiseValue(noiseVal));
             }
         }
@@ -194,18 +199,69 @@ namespace Assets
         private TileBase GetTileForNoiseValue(float value)
         {
             int index =
-                value < 0.1f ? 0 :
-                value < 0.15f ? 1 :
-                value < 0.25f ? 2 :
-                value < 0.5 ? 3 :
-                value < 0.725 ? 4 :
-                value < 0.85 ? 5 :
-                value < 0.875 ? 6 :
-                value < 0.95 ? 7 :
+                value < 0.111f ? 0 :
+                value < 0.222f ? 1 :
+                value < 0.333f ? 2 :
+                value < 0.444f ? 3 :
+                value < 0.555f ? 4 :
+                value < 0.666f ? 5 :
+                value < 0.777f ? 6 :
+                value < 0.888f ? 7 :
                 8;
 
             return allTiles[index];
         }
 
+        //see comments for color ranges
+        private Color GetCurrentTileColorFromNoiseValue(float noiseValue)
+        {
+            float r = 0;
+            float g = 0;
+            float b = 0;
+
+            if (noiseValue < 0.2)//green [51, 102, 0] - [229, 255,204]
+            {
+                r = (51 + noiseValue * (229 - 51));
+                g = (102 + noiseValue * (255 - 102));
+                b = (0 + noiseValue * (204 - 0));
+            }
+            else if (noiseValue < 0.3) // green [0, 102, 0] - [204, 255, 204]
+            {
+                r = (0 + noiseValue * (204 - 0));
+                g = (102 + noiseValue * (255 - 102));
+                b = (0 + noiseValue * (204 - 0));
+            }
+            else if (noiseValue < 0.4) // yellow-olive [102, 102, 0 ] - [255, 255 , 204]
+            {
+                r = (102 + noiseValue * (255 - 102));
+                g = (102 + noiseValue * (255 - 102));
+                b = (0 + noiseValue * (204 - 0));
+            }
+            else if (noiseValue < 0.6) //brown [102, 51, 0] - [255, 229, 204] 
+            {
+                r = (102 + noiseValue * (255 - 102));
+                g = (51 + noiseValue * (229 - 51));
+                b = (0 + noiseValue * (204 - 0));
+            }
+            else if (noiseValue < 0.8) //gray 
+            {
+                r = noiseValue * 255;
+                g = noiseValue * 255;
+                b = noiseValue * 255;
+            }
+            else //blue [0,0,255] - [204, 204, 255]
+            {
+                r = (0 + noiseValue * (204 - 0));
+                g = (0 + noiseValue * (204 - 0));
+                b = (255 + noiseValue * (255 - 255));
+            }
+
+            //rgb values need to be in range from 0-1
+            currentTileColor.r = r / 255;
+            currentTileColor.g = g / 255;
+            currentTileColor.b = b / 255;
+            currentTileColor.a = 1;
+            return currentTileColor;
+        }
     }
 }

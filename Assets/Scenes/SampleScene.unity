@@ -386,7 +386,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPersistant: 0
   tilemap: {fileID: 0}
-  noiseWrapper: {fileID: 0}
   GreenTile1: {fileID: 11400000, guid: b5138513f640d544594b18dabab9f7e0, type: 2}
   GreenTile2: {fileID: 11400000, guid: ba552d7bf71d9384688cae3b34b3dca1, type: 2}
   GreenTile3: {fileID: 11400000, guid: 1b11916b76e948e40ae13850e5d538b2, type: 2}
@@ -465,21 +464,21 @@ Tilemap:
   - m_RefCount: 0
     m_Data:
       e00: NaN
-      e01: -3.580709e+34
-      e02: 4.5861988e+11
+      e01: 0
+      e02: -0.0004704774
       e03: NaN
       e10: NaN
-      e11: 1.8e-43
-      e12: 8.23e-43
+      e11: 0
+      e12: 2.34e-43
       e13: NaN
-      e20: -8.273915e+12
-      e21: 3.5237466e-10
+      e20: -565408
+      e21: -0.00047047692
       e22: 0
-      e23: 4.5861988e+11
-      e30: 4.5914e-41
-      e31: 8.23e-43
+      e23: 0
+      e30: 7.38e-43
+      e31: 2.34e-43
       e32: 0
-      e33: 8.23e-43
+      e33: 0
   - m_RefCount: 0
     m_Data:
       e00: NaN
@@ -502,8 +501,7 @@ Tilemap:
   - m_RefCount: 0
     m_Data: {r: 0, g: 0, b: 0, a: 0}
   - m_RefCount: 0
-    m_Data: {r: -0.0000000069475874, g: -0.0000000069475874, b: -0.0000000069475874,
-      a: -0.0000000069475874}
+    m_Data: {r: 1.2578744e+11, g: 1.2578744e+11, b: 1.2578744e+11, a: 1.2578744e+11}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 60
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1209,7 +1207,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPersistant: 0
   tilemap: {fileID: 297443820}
-  noiseWrapper: {fileID: 0}
   GreenTile1: {fileID: 11400000, guid: b5138513f640d544594b18dabab9f7e0, type: 2}
   GreenTile2: {fileID: 11400000, guid: ba552d7bf71d9384688cae3b34b3dca1, type: 2}
   GreenTile3: {fileID: 11400000, guid: 1b11916b76e948e40ae13850e5d538b2, type: 2}
