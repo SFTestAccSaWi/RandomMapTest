@@ -65,7 +65,6 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\FastNoise.cs" />
-    <Compile Include="Assets\Scripts\NoiseController.cs" />
     <Compile Include="Assets\Scripts\NoiseWrapper.cs" />
     <Compile Include="Assets\Scripts\Singleton.cs" />
     <Compile Include="Assets\Scripts\TilemapController.cs" />

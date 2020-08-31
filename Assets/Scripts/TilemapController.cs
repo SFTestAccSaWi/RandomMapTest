@@ -39,6 +39,7 @@ namespace Assets
                 GreenTile2, GreenTile1, GreenTile3,
                 GrayTile1, GrayTile2, GrayTile3
             };
+
             UpdateTiles();
         }
 
@@ -205,5 +206,6 @@ namespace Assets
 
             return allTiles[index];
         }
+
     }
 }
